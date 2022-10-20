@@ -7,14 +7,14 @@ const PostsList = () => {
     const dispatch = useDispatch();
 
     const posts = useSelector(selectAllPosts);
-    const postsStatus = useSelector(getPostsStatus);
+    const postStatus = useSelector(getPostsStatus);
     const error = useSelector(getPostsError);
 
     useEffect(() => {
-        if (postsStatus === 'idle') {
+        if (postStatus === 'idle') {
             dispatch(fetchPosts())
         }
-    }, [postsStatus, dispatch])
+    }, [postStatus, dispatch])
 
     let content;
 
@@ -30,7 +30,7 @@ const PostsList = () => {
     return (
         <section>
             <h2>POSTS</h2>
-            {renderedPosts}
+            {content}
         </section>
     )
 }
