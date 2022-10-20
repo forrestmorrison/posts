@@ -16,11 +16,16 @@ const PostsList = () => {
         }
     }, [postsStatus, dispatch])
 
-    const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+    let content;
 
-    const renderedPosts = orderedPosts.map(post => (
-        
-    ))
+    if (postStatus === 'loading') {
+        content = <p>"Loading..."</p>;
+    } else if (postStatus === 'succeeded') {
+        const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+        content = orderedPosts.map(post => <PostsExcerpt key={post.id} post={post} />)
+    } else if (postStatus === 'failed') {
+        content = <p>{error}</p>;
+    }
 
     return (
         <section>
