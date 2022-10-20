@@ -53,6 +53,24 @@ const postsSlice = createSlice({
                 existingPost.reactions[reaction]++
             }
         }
+    },
+    extraReducers(builder) {
+        builder.addCase(fetchPosts.fulfilled, (state, action) => {
+            state.status = 'succeeded'
+
+            let min = 1;
+            const loadedPosts = action.payload.map(post => {
+                post.date = sub( new Date(), { minutes: min++ }).toISOString
+                post.reactions = {
+                    thumbsUp: 0,
+                    hooray: 0,
+                    heart: 0,
+                    rocket: 0,
+                    eyes: 0
+                }
+                return post;
+            })
+        })
     }
 })
 
