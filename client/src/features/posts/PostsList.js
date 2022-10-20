@@ -17,7 +17,6 @@ const PostsList = () => {
     }, [postStatus, dispatch])
 
     let content;
-
     if (postStatus === 'loading') {
         content = <p>"Loading..."</p>;
     } else if (postStatus === 'succeeded') {
