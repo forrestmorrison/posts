@@ -28,10 +28,9 @@ const PostsList = () => {
 
     return (
         <section>
-            <h2>POSTS</h2>
+            <h2>Posts</h2>
             {content}
         </section>
     )
 }
-
-export default PostsList;
+export default PostsList
