@@ -12,7 +12,7 @@ const initialState = {
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     const response = await axios.get(POSTS_URL)
-    return response.data
+    return [...response.data];
 })
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
