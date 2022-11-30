@@ -11,8 +11,8 @@ CREATE TABLE users (
 CREATE TABLE posts (
   id INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255),
-  user_id INT NOT NULL,
-  content TEXT,  
+  userId INT NOT NULL,
+  body TEXT,  
   PRIMARY KEY (id)
 );
 

@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const usersRouter = require('./routers/users');
+const postsRouter = require('./routers/posts');
 // const authRouter = require('./routers/auth');
 const { logger } = require('./middleware')
 
@@ -10,6 +11,7 @@ const port = process.env.PORT || 4001;
 app.use(bodyParser.json())
 app.use(logger)
 app.use('/users', usersRouter)
+app.use('/posts', postsRouter)
 // app.use('/auth', authRouter)
 
 app.get('/', (req, res) => {
