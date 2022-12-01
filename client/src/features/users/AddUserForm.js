@@ -4,30 +4,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { addNewUser } from "../../store/usersSlice";
 import { selectAllUsers } from "../../store/usersSlice";
 
-const AddPostForm = () => {
+const AddUserForm = () => {
     const dispatch = useDispatch()
 
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
     const [userId, setUserId] = useState('')
     const [addRequestStatus, setAddRequestStatus] = useState('idle')
 
     const users = useSelector(selectAllUsers);
 
-    const onTitleChanged = e => setTitle(e.target.value)
-    const onContentChanged = e => setContent(e.target.value)
-    const onAuthorChanged = e => setUserId(e.target.value)
+    const onEmailChanged = e => setEmail(e.target.value)
+    const onNameChanged = e => setName(e.target.value)
+    const onPasswordChanged = e => setPassword(e.target.value)
 
-    const canSave = [title, content, userId].every(Boolean) && addRequestStatus === 'idle';
+    const canSave = [email, name, password, userId].every(Boolean) && addRequestStatus === 'idle';
 
-    const onSavePostClicked = () => {
+    const onAddUserClicked = () => {
         if (canSave) {
             try {
                 setAddRequestStatus('pending')
-                dispatch(addNewPost({ title, body: content, userId })).unwrap()
+                dispatch(addNewUser({ email, name, password, userId })).unwrap()
 
-                setTitle('')
-                setContent('')
+                setEmail('')
+                setName('')
+                setPassword('')
                 setUserId('')
             } catch (err) {
                 console.error('Failed to save the post', err)
@@ -45,36 +47,42 @@ const AddPostForm = () => {
 
     return (
         <section>
-            <h2>NEW POST</h2>
+            <h2>NEW USER</h2>
             <form>
-                <label htmlFor="postTitle">TITLE:</label>
+                <label htmlFor="userEmail">EMAIL:</label>
                 <input 
                     type="text"
-                    id="postTitle"
-                    name="postTitle"
-                    value={title}
-                    onChange={onTitleChanged}
+                    id="userEmail"
+                    name="userEmail"
+                    value={email}
+                    onChange={onEmailChanged}
                 />
-                <label htmlFor="postAuthor">AUTHOR:</label>
-                <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
+                <select id="userEmail" value={userId} onChange={onEmailChanged}>
                     <option value=""></option>
                     {usersOptions}
                 </select>
-                <label htmlFor="postContent">CONTENT:</label>
+                <label htmlFor="userName">NAME:</label>
                 <textarea
-                    id="postContent"
-                    name="postContent"
-                    value={content}
-                    onChange={onContentChanged}
+                    id="userName"
+                    name="userName"
+                    value={name}
+                    onChange={onNameChanged}
+                />
+                <label htmlFor="userPassword">PASSWORD:</label>
+                <textarea
+                    id="userPassword"
+                    name="userPassword"
+                    value={password}
+                    onChange={onPasswordChanged}
                 />
                 <button 
                     type="button"
-                    onClick={onSavePostClicked}
+                    onClick={onAddUserClicked}
                     disabled={!canSave}
-                >SAVE POST</button>
+                >ADD USER</button>
             </form>
         </section>
     )
 }
 
-export default AddPostForm;
+export default AddUserForm;
