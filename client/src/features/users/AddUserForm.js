@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { addNewUser } from "../../store/usersSlice";
-import { selectAllUsers } from "../../store/usersSlice";
 
 const AddUserForm = () => {
     const dispatch = useDispatch()
@@ -10,40 +9,28 @@ const AddUserForm = () => {
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
-    const [userId, setUserId] = useState('')
     const [addRequestStatus, setAddRequestStatus] = useState('idle')
-
-    const users = useSelector(selectAllUsers);
 
     const onEmailChanged = e => setEmail(e.target.value)
     const onNameChanged = e => setName(e.target.value)
     const onPasswordChanged = e => setPassword(e.target.value)
 
-    const canSave = [email, name, password, userId].every(Boolean) && addRequestStatus === 'idle';
+    const canSave = [email, name, password].every(Boolean) && addRequestStatus === 'idle';
 
     const onAddUserClicked = () => {
-        if (canSave) {
-            try {
-                setAddRequestStatus('pending')
-                dispatch(addNewUser({ email, name, password, userId })).unwrap()
+        try {
+            setAddRequestStatus('pending')
+            dispatch(addNewUser({ email, name, password })).unwrap()
 
-                setEmail('')
-                setName('')
-                setPassword('')
-                setUserId('')
-            } catch (err) {
-                console.error('Failed to save the post', err)
-            } finally {
-                setAddRequestStatus('idle')
-            }
-        }
+            setEmail('')
+            setName('')
+            setPassword('')
+        } catch (err) {
+            console.error('Failed to save the post', err)
+        } finally {
+            setAddRequestStatus('idle')
+        }        
     }
-
-    const usersOptions = users.map(user => (
-        <option key={user.id} value={user.id}>
-            {user.name}
-        </option>
-    ))
 
     return (
         <section>
@@ -57,10 +44,7 @@ const AddUserForm = () => {
                     value={email}
                     onChange={onEmailChanged}
                 />
-                <select id="userEmail" value={userId} onChange={onEmailChanged}>
-                    <option value=""></option>
-                    {usersOptions}
-                </select>
+               
                 <label htmlFor="userName">NAME:</label>
                 <textarea
                     id="userName"
@@ -77,8 +61,8 @@ const AddUserForm = () => {
                 />
                 <button 
                     type="button"
-                    onClick={onAddUserClicked}
                     disabled={!canSave}
+                    onClick={onAddUserClicked}
                 >ADD USER</button>
             </form>
         </section>

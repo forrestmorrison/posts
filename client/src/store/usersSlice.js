@@ -14,8 +14,9 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
 // actions
 // name of the slice, initialState, reducers
 
-export const addNewUser = createAsyncThunk('posts/addNewUser', async (initialUser) => {
-    const response = await axios.post(USERS_URL, initialUser)
+export const addNewUser = createAsyncThunk('users/addNewUser', async (newUser) => {
+    const response = await axios.post(USERS_URL, newUser)
+    console.log('response', response)
     return response.data
 })
 

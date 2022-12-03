@@ -23,17 +23,17 @@ const getAllUsers = (req, res) => {
 //   })
 // }
 
-// const createUser = (req, res) => {
-//   // INSERT INTO USERS FIRST AND LAST NAME 
-//   let sql = "INSERT INTO users (first_name, last_name)"
-//   // WHAT GOES IN THE BRACKETS
-//   sql = mysql.format(sql, [])
+const createUser = (req, res) => {
+  const { email, name, password } = req.body;
 
-//   pool.query(sql, (err, results) => {
-//     if (err) return handleSQLError(res, err)
-//     return res.json({ newId: results.insertId });
-//   })
-// }
+  let sql = "INSERT INTO users (email, name, password) VALUES (?,?,?)"
+  sql = mysql.format(sql, [email, name, password])
+
+  pool.query(sql, (err, results) => {
+    if (err) return handleSQLError(res, err)
+    return res.json({ id: results.insertId, email, name });
+  })
+}
 
 // const updateUserById = (req, res) => {
 //   // UPDATE USERS AND SET FIRST AND LAST NAME WHERE ID = <REQ PARAMS ID>
