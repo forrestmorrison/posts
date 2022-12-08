@@ -1,6 +1,7 @@
 import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
 import { sub } from 'date-fns';
 import axios from "axios";
+import { axiosWithAuth } from "./authSlice";
 
 const POSTS_URL = "/posts" // 'https://jsonplaceholder.typicode.com/posts';
 
@@ -11,12 +12,12 @@ const initialState = {
 }
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-    const response = await axios.get(POSTS_URL)
+    const response = await axiosWithAuth.get(POSTS_URL)
     return [...response.data];
 })
 
 export const addNewPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
-    const response = await axios.post(POSTS_URL, initialPost)
+    const response = await axiosWithAuth.post(POSTS_URL, initialPost)
     return response.data
 })
 
