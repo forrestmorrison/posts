@@ -16,7 +16,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
 
 export const addNewUser = createAsyncThunk('users/addNewUser', async (newUser) => {
     const response = await axios.post(USERS_URL, newUser)
-    console.log('response', response)
+    console.log('response >>>>>', response)
     return response.data
 })
 
